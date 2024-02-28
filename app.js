@@ -4,6 +4,16 @@
 const http = require('http');
 const { title } = require('process');
 
+//import dayjs from 'dayjs' // ES 2015
+const dayjs = require('dayjs');
+const { log } = require('console');
+
+const relativeTime = require('dayjs/plugin/relativeTime');
+dayjs.extend(relativeTime);
+
+// current date in ISO8601, without fraction seconds e.g. '2020-04-02T08:02:17-05:00'
+dayjs().format();
+
 // Séléction de livres incontournables
 const books = [
 	{
@@ -76,6 +86,7 @@ const server = http.createServer((req, res) => {
 	for (const key in books[0]) {
 		res.write(`<th scope="col" style="color:blue;margin:16px;text-transform:uppercase;text-align:left;padding-inline:8px"> ${key}</th>`);
 	}
+	res.write(`<th scope="col" style="color:blue;margin:16px;text-transform:uppercase;text-align:left;padding-inline:8px">age</th>`);
 	res.write(` </tr>
     </thead>
     <tbody>`);
@@ -85,10 +96,13 @@ const server = http.createServer((req, res) => {
 		for (const key in book) {
 			if (key === 'title') {
 				res.write(`<th scope="row" style="text-align:left; padding-inline:8px">${book.title}</th>`);
+			} else if (key === 'date') {
+				res.write(`<td style="padding-inline:8px">${dayjs(book[key]).format('dddd, MMMM DD YYYY')}</td>`);
 			} else {
 				res.write(`<td style="padding-inline:8px">${book[key]}</td>`);
 			}
 		}
+		res.write(`<td style="padding-inline:8px">${dayjs(book.date).fromNow(true)}</td>`);
 		res.write(`</tr>`);
 	}
 	res.write(`</tbody>
@@ -97,7 +111,7 @@ const server = http.createServer((req, res) => {
 	// On écrit le pied de page de notre page html
 	res.write('</body></html>');
 
-	// On à fini d'envoyer nos informations au client
+	// On a fini d'envoyer nos informations au client
 	res.end();
 });
 
