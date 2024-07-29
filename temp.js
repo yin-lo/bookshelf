@@ -8,8 +8,8 @@ const { title } = require('process');
 const dayjs = require('dayjs');
 const { log } = require('console');
 
-const relativeTime = require('dayjs/plugin/relativeTime');
-dayjs.extend(relativeTime);
+// const relativeTime = require('dayjs/plugin/relativeTime');
+// dayjs.extend(relativeTime);
 
 const locale_fr = require('dayjs/locale/fr');
 dayjs.locale(locale_fr);
@@ -105,7 +105,7 @@ const server = http.createServer((req, res) => {
 			if (key === 'title') {
 				res.write(`<th scope="row" style="text-align:left; padding-inline:8px">${book.title}</th>`);
 			} else if (key === 'date') {
-				res.write(`<td style="padding-inline:8px">${dayjs(book[key]).format('dddd, MMMM Do YYYY')}</td>`);
+				res.write(`<td style="padding-inline:8px">${dayjs(book[key]).format('dddd Do MMMM YYYY')}</td>`);
 			} else {
 				res.write(`<td style="padding-inline:8px">${book[key]}</td>`);
 			}

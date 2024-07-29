@@ -1,8 +1,8 @@
 const books = require('./books');
 
 const dayjs = require('dayjs');
-const relativeTime = require('dayjs/plugin/relativeTime');
-dayjs.extend(relativeTime);
+// const relativeTime = require('dayjs/plugin/relativeTime');
+// dayjs.extend(relativeTime);
 const locale_fr = require('dayjs/locale/fr');
 dayjs.locale(locale_fr);
 const advancedFormat = require('dayjs/plugin/advancedFormat');
@@ -26,7 +26,7 @@ const utils = {
 				if (key === 'title') {
 					html += `<th scope="row" style="text-align:left; padding-inline:8px">${book.title}</th>`;
 				} else if (key === 'date') {
-					html += `<td style="padding-inline:8px">${dayjs(book[key]).format('dddd, MMMM Do YYYY')}</td>`;
+					html += `<td style="padding-inline:8px">${dayjs(book[key]).format('dddd Do MMMM YYYY')}</td>`;
 				} else {
 					html += `<td style="padding-inline:8px">${book[key]}</td>`;
 				}
